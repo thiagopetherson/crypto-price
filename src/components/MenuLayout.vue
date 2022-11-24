@@ -1,15 +1,16 @@
 <template>
   <header class="header-container">
     <div class="menu-items">
-      <div class="nav-logo">        
-        Bitcoin Price           
+      <div class="nav-logo">
+        <img src="@/assets/images/bitcoin.png" /> 
+        <span>Bitcoin Price</span>          
       </div>
       <div class="nav-items">
         <div class="">            
-          Option One            
+          Search for date           
         </div>
         <div>
-          Option One 2
+          Other currencies
         </div>
       </div>
     </div>    
@@ -43,6 +44,16 @@ export default {
     font-style: normal
     font-size: 1.8rem
     font-weight: bold
+
+    .nav-logo
+      display: flex     
+      align-items: center
+
+      img
+        width: 6%
+
+      span
+        margin-left: 1%
        
     .nav-items     
       display: flex
