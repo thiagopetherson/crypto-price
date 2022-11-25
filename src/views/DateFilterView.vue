@@ -1,13 +1,17 @@
 <template>
   <div class="date-filter">
-    <h1>Date</h1>
+    <h1>{{ id }}</h1>
   </div>
 </template>
 
 <script>
 
 export default {
-    name: 'DateFilterView',
+  name: 'DateFilterView',
+  props: ['id'],
+  mounted () {
+    console.log(this.id)
+  }
 }
 
 </script>

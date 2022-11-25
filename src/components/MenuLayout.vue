@@ -6,8 +6,8 @@
         <span>Crypto Price</span>          
       </div>
       <div class="nav-items">
-        <div class="">            
-          Search for date           
+        <div class="" @click="this.$router.push({ name: 'home' })">            
+          Home           
         </div>
         <div>
           Other currencies

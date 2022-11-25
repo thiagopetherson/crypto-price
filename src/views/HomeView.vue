@@ -11,7 +11,7 @@
         <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
           <h2>{{ coin.name }}</h2>
           <img :src="coin.image" />          
-          <router-link to="/">{{ brazilianCurrency(coin.current_price) }}</router-link>
+          <router-link :to="`date/${coin.id}`">{{ brazilianCurrency(coin.current_price) }}</router-link>
         </div>
       </div>
     </div>
@@ -39,25 +39,14 @@ export default {
     async getCoinValues () {
       this.loading = true
 
-      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&order=market_cap_desc&per_page=250&page=1&sparkline=true`)
+      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=bitcoin%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
       .then(response => {
+        console.log(response.data)
         let bitcoin = response.data.find(element => element.id === 'bitcoin')            
         let ethereum = response.data.find(element => element.id === 'ethereum')    
-        let atom = response.data.find(element => element.id === 'cosmos')       
-        this.coinValues = [bitcoin, ethereum, atom]         
-        console.log(this.coinValues)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-      .finally(() => {        
-        this.getDacxiValue()
-      })
-    },
-    async getDacxiValue () {
-      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=dacxi&order=market_cap_desc&sparkline=false`)
-      .then(response => {
-        this.coinValues.push(response.data[0])        
+        let atom = response.data.find(element => element.id === 'cosmos')
+        let dacxi = response.data.find(element => element.id === 'dacxi')       
+        this.coinValues = [bitcoin, ethereum, atom, dacxi]        
       })
       .catch(error => {
         console.log(error)
