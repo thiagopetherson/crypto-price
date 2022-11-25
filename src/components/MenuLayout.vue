@@ -3,7 +3,7 @@
     <div class="menu-items">
       <div class="nav-logo">
         <img src="@/assets/images/bitcoin.png" /> 
-        <span>Bitcoin Price</span>          
+        <span>Crypto Price</span>          
       </div>
       <div class="nav-items">
         <div class="">            

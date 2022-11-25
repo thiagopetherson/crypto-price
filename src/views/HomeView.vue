@@ -1,48 +1,75 @@
 <template>
   <div class="home">
-    <div class="home-item-title">
-      <h1>Bitcoin Current Price</h1>     
-    </div>
-    <div class="home-item-content">
-      <img src="@/assets/images/bitcoin.png" />
-      <!--<h2>R$ 88.127,00 BRL</h2>-->
-      <h2>{{ bitcoinPrice }} BRL</h2>
-    </div>
-    <div class="home-item-options">
-      <div class="home-item-options-search" @click="this.$router.push({name: 'home'})">
-        <p>Search for date</p>
+    <div v-if="!loading" class="home-item">
+      <div class="home-item-title" v-if="coinValues.length === 4">
+        <h1>Realtime Currency Values</h1>     
       </div>
-      <div class="home-item-options-other" @click="this.$router.push({name: 'home'})">
-        <p>Other currencies</p>
+      <div class="home-item-title" v-else>
+        <h1>Exceeded Requests. Try again in 1 minute.</h1>     
       </div>
+      <div class="home-item-content" v-if="coinValues.length === 4">        
+        <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
+          <h2>{{ coin.name }}</h2>
+          <img :src="coin.image" />          
+          <router-link to="/">{{ brazilianCurrency(coin.current_price) }}</router-link>
+        </div>
+      </div>
+    </div>
+    <div v-else class="loading">
+      <img src="@/assets/images/loading.gif">
     </div>
   </div>
 </template>
 
 <script>
+import globalMixins from '@/mixins/globalMixins'
+
 export default {
-  name: 'HomeView', 
+  name: 'HomeView',
+  mixins: [globalMixins],
   data () {
     return {
-      bitcoinPrice: '',
+      coinValues: [],
+      ethereum: null,
+      atom: null,
+      loading: false,
     }
   },
-  methods: {
-    async getBitcointCurrentPrice () {
-      await this.axios.get(`${this.baseUrl}/simple/price?ids=bitcoin&vs_currencies=BRL`)
-      .then(response => {            
-        let value = response.data.bitcoin.brl
-        value = value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-        this.bitcoinPrice = value        
+  methods: {    
+    async getCoinValues () {
+      this.loading = true
+
+      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&order=market_cap_desc&per_page=250&page=1&sparkline=true`)
+      .then(response => {
+        let bitcoin = response.data.find(element => element.id === 'bitcoin')            
+        let ethereum = response.data.find(element => element.id === 'ethereum')    
+        let atom = response.data.find(element => element.id === 'cosmos')       
+        this.coinValues = [bitcoin, ethereum, atom]         
+        console.log(this.coinValues)
       })
       .catch(error => {
         console.log(error)
       })
+      .finally(() => {        
+        this.getDacxiValue()
+      })
+    },
+    async getDacxiValue () {
+      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=dacxi&order=market_cap_desc&sparkline=false`)
+      .then(response => {
+        this.coinValues.push(response.data[0])        
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .finally(() => {        
+        this.loading = false
+      })
     }
   },
-  mounted () {
-    this.getBitcointCurrentPrice()
-  }
+  created () {   
+    this.getCoinValues()   
+  } 
 }
 </script>
 
@@ -51,59 +78,66 @@ export default {
 
 .home
   width: 100%
-  height: 100vh
+  height: 92vh
   display: flex
   flex-direction: column
-  align-items: center
-  justify-content: space-around
+  
+  .home-item
+    width: 100%
+    height: 70%
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center   
 
-  .home-item-title
-    width: 40%    
-    text-align: center
-    
-    h1
-      font-size: $title-size
-      font-weight: 400
+    .home-item-title
+      width: 40%    
+      text-align: center
 
-  .home-item-content
-    width: 40%    
-    text-align: center
+      h1
+        font-size: $title-size
+        font-weight: 400
+        color: $secondary-color
 
-    img
-      width: 20%
-    
-    h2
-      margin-top: 2%
-      font-size: $subtitle-size
-      font-weight: 400
+    .home-item-content
+      width: 60%
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
 
-.home-item-options
-  width: 40%
-  height: 40%
-  display: flex
-  flex-direction: row
-  justify-content: space-around
 
-  div
-    width: 30%
-    height: 50%
-    display: flex    
+      .home-item-content-prices
+        width: 25%
+        display: flex
+        flex-direction: column
+        align-items: center  
+
+        h2
+          font-size: 2.4rem
+          font-weight: normal        
+
+        img
+          width: 70%
+          margin-top: 10%
+          margin-bottom: 10%
+
+        a
+          font-size: $option-text-size
+          font-weight: normal
+          color: $primary-color
+          text-decoration: none
+
+  .loading    
+    width: 100vw
+    height: 92vh 
+    display: flex
     justify-content: center
     align-items: center
-    border-radius: 5%
-    cursor: pointer
 
-    p
-      font-size: $option-text-size
-      color: $light-color
-      font-weight: bold
-
-  .home-item-options-search
-    background-color: $primary-color
-
-  .home-item-options-other
-    background-color: $secondary-color
-
+    img
+      width: 150px
+      height: 150px
 
 </style>
 
