@@ -48,10 +48,23 @@ export default {
 
   .date-filter-card-item
     width: 22%
-    height: 44%
+    padding-top: 2%
+    padding-bottom: 2%    
     @include display-direction-justify-align($dir: column, $jus: center)    
     background-color: $primary-color-opacity
-    border-radius: 50%
+    border-radius: 5%
+    @media only screen and (min-width: 1px) and (max-width: 290px)
+      width: 90%
+      padding-top: 10%
+      padding-bottom: 10%
+    @media only screen and (min-width: 291px) and (max-width: 1000px)
+      width: 70%
+      padding-top: 10%
+      padding-bottom: 10%
+    @media only screen and (min-width: 1023px) and (max-width: 1281px)
+      width: 50%
+      padding-top: 10%
+      padding-bottom: 10% 
 
     .date-filter-card-item-close 
       width: 100%

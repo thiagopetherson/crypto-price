@@ -9,7 +9,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/date/:coinId',
+    path: '/date/:coinId/',
     name: 'date',
     component: DateFilterView,
     props: true,

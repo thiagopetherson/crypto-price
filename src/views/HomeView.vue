@@ -11,7 +11,7 @@
         <h1>Exceeded Requests. Try again in 1 minute.</h1>     
       </div>      
       <div class="home-item-content" v-if="coinValues.length > 0">        
-        <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
+        <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id">          
           <router-link :to="`date/${coin.id}`">{{ coin.name }}</router-link>
           <img :src="coin.image" @click="this.$router.push({ path: `date/${coin.id}` })" />          
           <router-link :to="`date/${coin.id}`">{{ brazilianCurrency(coin.current_price) }}</router-link>
@@ -144,16 +144,16 @@ export default {
         color: $light-color       
         font-weight: 500
         cursor: pointer
+
+        &:hover
+          background-color: $primary-color 
       
       input, button 
         @media only screen and (min-width: 1px) and (max-width: 290px) 
           padding: 0.2%
           font-size: 0.9rem 
         @media only screen and (min-width: 291px) and (max-width: 500px)          
-          font-size: 1.2rem 
-
-        &:hover
-          background-color: $primary-color          
+          font-size: 1.2rem                  
       
       h5
         margin-top: 2%
