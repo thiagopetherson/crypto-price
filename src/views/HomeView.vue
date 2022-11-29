@@ -166,7 +166,7 @@ export default {
           font-size: 1.6rem
 
     .home-item-content
-      width: 60%
+      width: 60%      
       @include display-direction-justify-align($jus: center, $ali: center)
       @media only screen and (min-width: 1px) and (max-width: 500px)
         width: 100%
@@ -174,6 +174,8 @@ export default {
         flex-wrap: wrap
       @media only screen and (min-width: 501px) and (max-width: 1000px)
         width: 90%
+      @media only screen and (min-width: 1025px)
+        margin-top: 5%
 
       .home-item-content-prices
         width: 25%
