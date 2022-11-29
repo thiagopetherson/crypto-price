@@ -35,32 +35,27 @@ export default {
 
 <style scoped lang="sass">
 @import "@/assets/sass/variables.sass"
+@import "@/assets/sass/mixins.sass"
 
 .date-filter-card
   top: 0
   bottom: 0
   position: absolute
   width: 100%
-  display: flex
-  flex-direction: column
-  align-items: center 
-  justify-content: center
+  @include display-direction-justify-align($dir: column, $jus: center, $ali: center) 
   background: rgba(0, 0, 0, 0.6)
   z-index: 10
 
   .date-filter-card-item
     width: 22%
     height: 44%
-    display: flex
-    flex-direction: column  
-    justify-content: center
+    @include display-direction-justify-align($dir: column, $jus: center)    
     background-color: $primary-color-opacity
     border-radius: 50%
 
     .date-filter-card-item-close 
       width: 100%
-      display: flex
-      justify-content: center
+      @include display-direction-justify-align($jus: center)      
 
       .close-modal   
         font-size: 2rem             
@@ -73,9 +68,7 @@ export default {
 
     .date-filter-card-item-content
       width: 100%
-      display: flex
-      flex-direction: column
-      align-items: center
+      @include display-direction-justify-align($dir: column, $ali: center)     
       padding: 2%
       color: $grey-color
 
@@ -94,12 +87,5 @@ export default {
         h5         
           text-transform: capitalize
           font-weight: normal
-          font-size: 2.2rem
-          
-      .date-filter-card-item-content-coin
-        
-      .date-filter-card-item-content-date     
-
-      .date-filter-card-item-content-time
-
+          font-size: 2.2rem 
 </style>

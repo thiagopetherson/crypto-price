@@ -10,7 +10,10 @@
     <div class="date-filter-search">
         <input class="date-filter-search-date" type="date" v-model="form.date" />
         <input class="date-filter-search-time" type="time" v-model="form.time" />
-        <button class="date-filter-search-submit" @click="getCoinByDate()">Search</button>
+        <button class="date-filter-search-submit" @click="getCoinByDate()">Search</button>   
+    </div>
+    <div class="date-filter-link">
+      <button class="date-filter-link-button" @click="this.$router.push({ name: 'home' })">Home</button> 
     </div>
     <DataFilterCardLayout v-if="showresult" :coin="coinId" :date="form.date" 
     :time="form.time" :coinValue="searchedCoinValue" @actionCloseModal="closeModal"  />  
@@ -72,21 +75,16 @@ export default {
 
 <style scoped lang="sass">
 @import "@/assets/sass/variables.sass"
+@import "@/assets/sass/mixins.sass"
 
 .date-filter  
   width: 100%
   height: 90vh
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  
+  @include display-direction-justify-align($dir: column, $jus: center, $ali: center) 
+   
   .date-filter-title
-    width: 40%
-    display: flex
-    flex-direction: column
-    align-items: center
-    justify-content: center
+    width: 40%    
+    @include display-direction-justify-align($dir: column, $jus: center, $ali: center)    
        
     h1      
       font-size: $title-size
@@ -99,18 +97,16 @@ export default {
       font-weight: normal
 
   .date-filter-img
-    margin: 3% 0 3% 0
+    margin: 2% 0 2% 0
     width: 10%
 
     img
       width: 100%
 
   .date-filter-search    
-    width: 40%  
-    display: flex
-    flex-direction: column
-    align-items: center   
-
+    width: 40%
+    @include display-direction-justify-align($dir: column, $ali: center) 
+    
     input
       padding: 1% 5% 1% 5%
       margin-top: 2%
@@ -123,6 +119,21 @@ export default {
       font-size: 1.8rem
       background-color: $primary-color
       color: $light-color
+      border-radius: 5px
+      font-weight: 500
+      cursor: pointer
+
+  .date-filter-link
+    width: 40%
+    @include display-direction-justify-align($dir: column, $ali: center)     
+
+    button
+      padding: 1% 5% 1% 5%
+      margin-top: 2%
+      font-size: 1.8rem
+      background-color: $secondary-color
+      color: $light-color
+      border-radius: 5px
       font-weight: 500
       cursor: pointer
 

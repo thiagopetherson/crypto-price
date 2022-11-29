@@ -3,15 +3,13 @@
     <div v-if="!loading" class="home-item">
       <div class="home-item-title" v-if="coinValues.length > 0">
         <h1>Realtime Currency Values</h1>
+        <input type="text" v-model="otherCoin" />
+        <button @click="() => getOtherCoinValue()">Search Other Coin</button>
         <h5>click on a coin to search by date</h5>   
       </div>     
       <div class="home-item-title" v-else>
         <h1>Exceeded Requests. Try again in 1 minute.</h1>     
-      </div>
-      <div class="home-item-search-other">
-        <input type="text" v-model="otherCoin" />
-        <button @click="getOtherCoinValue()">Search Other Coin</button>
-      </div>
+      </div>      
       <div class="home-item-content" v-if="coinValues.length > 0">        
         <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
           <router-link :to="`date/${coin.id}`">{{ coin.name }}</router-link>
@@ -20,12 +18,12 @@
         </div>
       </div>
       <div class="home-item-button-home" v-if="coinValues.length === 1">
-        <button @click="this.$router.push({ name: 'home' })">Home</button>     
+        <button @click="() => getCoinValues()">Home</button>     
       </div>
-    </div>
+    </div>    
     <div v-else class="loading">
       <img src="@/assets/images/loading.gif">
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -95,20 +93,18 @@ export default {
 
 <style scoped lang="sass">
 @import "@/assets/sass/variables.sass"
+@import "@/assets/sass/mixins.sass"
 
 .home
   width: 100%
   height: 90%
-  display: flex
-  flex-direction: column
+  margin-top: 5%
+  @include display-direction-justify-align($dir: column)  
   
   .home-item
     width: 100%
     height: 70%
-    display: flex
-    flex-direction: column
-    justify-content: space-around
-    align-items: center   
+    @include display-direction-justify-align($dir: column, $jus: space-around, $ali: center)
 
     .home-item-title
       width: 40%    
@@ -119,24 +115,35 @@ export default {
         font-weight: 400
         color: $secondary-color
       
+      input
+        padding: 0.2%
+        font-size: 1.4rem       
+      
+      button
+        margin-left: -2px
+        padding: 0.2%      
+        font-size: 1.4rem
+        background-color: $secondary-color
+        color: $light-color       
+        font-weight: 500
+        cursor: pointer
+
+        &:hover
+          background-color: $primary-color          
+      
       h5
+        margin-top: 2%
         font-size: 2rem
         font-weight: 400
-        color: $secondary-color
+        color: $secondary-color   
 
     .home-item-content
       width: 60%
-      display: flex
-      flex-direction: row
-      justify-content: center
-      align-items: center
-
+      @include display-direction-justify-align($jus: center, $ali: center)
 
       .home-item-content-prices
         width: 25%
-        display: flex
-        flex-direction: column
-        align-items: center
+        @include display-direction-justify-align($dir: column, $ali: center)       
 
         a
           font-size: $option-text-size
@@ -151,29 +158,28 @@ export default {
 
     .home-item-button-home
       width: 60%
-      display: flex
-      flex-direction: row
-      justify-content: center
-      align-items: center
+      @include display-direction-justify-align($jus: center, $ali: center)    
 
       button
         padding: 1% 5% 1% 5%       
         font-size: 1.8rem
-        background-color: $primary-color
+        background-color: $secondary-color
         color: $light-color
+        border-radius: 5px
         font-weight: 500
-        cursor: pointer  
+        cursor: pointer
+      
+        &:hover
+          background-color: $primary-color          
 
   .loading    
     width: 100vw
-    height: 92vh 
-    display: flex
-    justify-content: center
-    align-items: center
+    height: 92vh
+    @include display-direction-justify-align($jus: center, $ali: center)    
 
     img
       width: 150px
-      height: 150px
+      height: 150px 
 
 </style>
 
