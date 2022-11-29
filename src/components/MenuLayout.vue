@@ -29,7 +29,7 @@ export default {
 .header-container
   background-color: $primary-color
   width: 100%
-  height: 8vh
+  height: 10%
   display: flex
   justify-content: center  
   color: $light-color

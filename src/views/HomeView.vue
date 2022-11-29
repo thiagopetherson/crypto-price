@@ -1,18 +1,26 @@
 <template>
   <div class="home">
     <div v-if="!loading" class="home-item">
-      <div class="home-item-title" v-if="coinValues.length === 4">
-        <h1>Realtime Currency Values</h1>     
-      </div>
+      <div class="home-item-title" v-if="coinValues.length > 0">
+        <h1>Realtime Currency Values</h1>
+        <h5>click on a coin to search by date</h5>   
+      </div>     
       <div class="home-item-title" v-else>
         <h1>Exceeded Requests. Try again in 1 minute.</h1>     
       </div>
-      <div class="home-item-content" v-if="coinValues.length === 4">        
+      <div class="home-item-search-other">
+        <input type="text" v-model="otherCoin" />
+        <button @click="getOtherCoinValue()">Search Other Coin</button>
+      </div>
+      <div class="home-item-content" v-if="coinValues.length > 0">        
         <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
-          <h2>{{ coin.name }}</h2>
+          <router-link :to="`date/${coin.id}`">{{ coin.name }}</router-link>
           <img :src="coin.image" />          
           <router-link :to="`date/${coin.id}`">{{ brazilianCurrency(coin.current_price) }}</router-link>
         </div>
+      </div>
+      <div class="home-item-button-home" v-if="coinValues.length === 1">
+        <button @click="this.$router.push({ name: 'home' })">Home</button>     
       </div>
     </div>
     <div v-else class="loading">
@@ -33,6 +41,7 @@ export default {
       ethereum: null,
       atom: null,
       loading: false,
+      otherCoin: ''
     }
   },
   methods: {    
@@ -40,13 +49,35 @@ export default {
       this.loading = true
 
       await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=bitcoin%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
-      .then(response => {
-        console.log(response.data)
+      .then(response => {       
         let bitcoin = response.data.find(element => element.id === 'bitcoin')            
         let ethereum = response.data.find(element => element.id === 'ethereum')    
         let atom = response.data.find(element => element.id === 'cosmos')
         let dacxi = response.data.find(element => element.id === 'dacxi')       
         this.coinValues = [bitcoin, ethereum, atom, dacxi]        
+      })
+      .catch(error => {
+        console.log(error)
+      })
+      .finally(() => {        
+        this.loading = false
+      })
+    },
+    async getOtherCoinValue () {
+      this.loading = true
+
+      await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=${this.otherCoin.toLowerCase()}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
+      .then(response => {   
+        
+        if ( this.otherCoin === '' || response.data.length === 0 ) {
+          this.loading = false          
+          alert('Use a valid coin')
+          return 
+        }       
+        
+        let coin = response.data[0]
+        this.coinValues = []
+        this.coinValues.push(coin)     
       })
       .catch(error => {
         console.log(error)
@@ -67,7 +98,7 @@ export default {
 
 .home
   width: 100%
-  height: 92vh
+  height: 90%
   display: flex
   flex-direction: column
   
@@ -87,6 +118,11 @@ export default {
         font-size: $title-size
         font-weight: 400
         color: $secondary-color
+      
+      h5
+        font-size: 2rem
+        font-weight: 400
+        color: $secondary-color
 
     .home-item-content
       width: 60%
@@ -100,22 +136,33 @@ export default {
         width: 25%
         display: flex
         flex-direction: column
-        align-items: center  
-
-        h2
-          font-size: 2.4rem
-          font-weight: normal        
-
-        img
-          width: 70%
-          margin-top: 10%
-          margin-bottom: 10%
+        align-items: center
 
         a
           font-size: $option-text-size
           font-weight: normal
           color: $primary-color
           text-decoration: none
+
+        img
+          width: 70%
+          margin-top: 10%
+          margin-bottom: 10%
+
+    .home-item-button-home
+      width: 60%
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+
+      button
+        padding: 1% 5% 1% 5%       
+        font-size: 1.8rem
+        background-color: $primary-color
+        color: $light-color
+        font-weight: 500
+        cursor: pointer  
 
   .loading    
     width: 100vw
