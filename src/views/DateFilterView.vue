@@ -84,28 +84,50 @@ export default {
    
   .date-filter-title
     width: 40%    
-    @include display-direction-justify-align($dir: column, $jus: center, $ali: center)    
+    @include display-direction-justify-align($dir: column, $jus: center, $ali: center)
+    @media only screen and (min-width: 1px) and (max-width: 290px)
+      width: 100%    
+    @media only screen and (min-width: 291px) and (max-width: 500px)
+      width: 90%
+    @media only screen and (min-width: 501px) and (max-width: 1000px)
+      width: 80%
        
     h1      
       font-size: 4rem
       font-weight: 400
       color: $secondary-color
       text-transform: uppercase
+      @media only screen and (min-width: 1px) and (max-width: 290px)
+        font-size: 2.3rem
+      @media only screen and (min-width: 291px) and (max-width: 500px)
+        font-size: 3rem
 
     h3      
       font-size: 2.2rem
       font-weight: normal
+    @media only screen and (min-width: 1px) and (max-width: 290px) 
+      font-size: 1.4rem
+    @media only screen and (min-width: 291px) and (max-width: 500px)
+      font-size: 1.6rem
 
   .date-filter-img
     margin: 2% 0 2% 0
     width: 10%
+    @media only screen and (min-width: 1px) and (max-width: 290px)
+      width: 20%
+    @media only screen and (min-width: 291px) and (max-width: 500px)
+      width: 30%
 
     img
       width: 100%
+    
 
   .date-filter-search    
     width: 40%
-    @include display-direction-justify-align($dir: column, $ali: center) 
+    @include display-direction-justify-align($dir: column, $ali: center)
+    @media only screen and (min-width: 1px) and (max-width: 500px)
+      margin-top: 5%
+      margin-bottom: 5% 
     
     input
       padding: 1% 5% 1% 5%
