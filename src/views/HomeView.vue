@@ -181,10 +181,10 @@ export default {
         @media only screen and (min-width: 1px) and (max-width: 500px)
           width: 50%
           margin-top: 15%
-        @media only screen and (min-width: 501px) and (max-width: 1100px)   
+        @media only screen and (min-width: 501px) and (max-width: 1000px)   
           margin-top: 15%
-        @media only screen and (min-width: 501px) and (max-width: 1281px)
-          margin-top: 15%
+        @media only screen and (min-width: 1001px) and (max-width: 1281px)
+          margin-top: 5%
 
         a
           font-size: 2.5rem
