@@ -87,7 +87,7 @@ export default {
     @include display-direction-justify-align($dir: column, $jus: center, $ali: center)    
        
     h1      
-      font-size: $title-size
+      font-size: 4rem
       font-weight: 400
       color: $secondary-color
       text-transform: uppercase

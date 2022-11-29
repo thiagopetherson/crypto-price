@@ -13,7 +13,7 @@
       <div class="home-item-content" v-if="coinValues.length > 0">        
         <div class="home-item-content-prices" v-for="coin in coinValues" :key="coin.id"> 
           <router-link :to="`date/${coin.id}`">{{ coin.name }}</router-link>
-          <img :src="coin.image" />          
+          <img :src="coin.image" @click="this.$router.push({ path: `date/${coin.id}` })" />          
           <router-link :to="`date/${coin.id}`">{{ brazilianCurrency(coin.current_price) }}</router-link>
         </div>
       </div>
@@ -99,22 +99,39 @@ export default {
   width: 100%
   height: 90%
   margin-top: 5%
-  @include display-direction-justify-align($dir: column)  
+  @include display-direction-justify-align($dir: column)
+  @media only screen and (min-width: 1px) and (max-width: 500px)
+    margin-top: 0%
   
   .home-item
     width: 100%
     height: 70%
-    @include display-direction-justify-align($dir: column, $jus: space-around, $ali: center)
+    @include display-direction-justify-align($dir: column, $jus: center, $ali: center)
+    @media only screen and (min-width: 1px) and (max-width: 500px)  
+      height: 100%
 
     .home-item-title
-      width: 40%    
+      width: 40% 
       text-align: center
+      @media only screen and (min-width: 1px) and (max-width: 290px)
+        width: 100%    
+      @media only screen and (min-width: 291px) and (max-width: 500px)
+        width: 90%
+      @media only screen and (min-width: 501px) and (max-width: 1000px)
+        width: 80%
+       
 
       h1
-        font-size: $title-size
+        font-size: 4rem
         font-weight: 400
-        color: $secondary-color
-      
+        color: $secondary-color 
+        @media only screen and (min-width: 1px) and (max-width: 290px)
+          font-size: 2.3rem
+        @media only screen and (min-width: 291px) and (max-width: 500px)
+          font-size: 3rem
+        @media only screen and (min-width: 501px) and (max-width: 1100px)
+          font-size: 3rem
+        
       input
         padding: 0.2%
         font-size: 1.4rem       
@@ -127,6 +144,13 @@ export default {
         color: $light-color       
         font-weight: 500
         cursor: pointer
+      
+      input, button 
+        @media only screen and (min-width: 1px) and (max-width: 290px) 
+          padding: 0.2%
+          font-size: 0.9rem 
+        @media only screen and (min-width: 291px) and (max-width: 500px)          
+          font-size: 1.2rem 
 
         &:hover
           background-color: $primary-color          
@@ -135,26 +159,56 @@ export default {
         margin-top: 2%
         font-size: 2rem
         font-weight: 400
-        color: $secondary-color   
+        color: $secondary-color
+        @media only screen and (min-width: 1px) and (max-width: 290px) 
+          font-size: 1.4rem
+        @media only screen and (min-width: 291px) and (max-width: 500px)
+          font-size: 1.6rem
 
     .home-item-content
       width: 60%
       @include display-direction-justify-align($jus: center, $ali: center)
+      @media only screen and (min-width: 1px) and (max-width: 500px)
+        width: 100%
+        @include display-direction-justify-align($dir: row, $jus: center)
+        flex-wrap: wrap
+      @media only screen and (min-width: 501px) and (max-width: 1000px)
+        width: 90%
 
       .home-item-content-prices
         width: 25%
-        @include display-direction-justify-align($dir: column, $ali: center)       
+        @include display-direction-justify-align($dir: column, $ali: center)
+        @media only screen and (min-width: 1px) and (max-width: 500px)
+          width: 50%
+          margin-top: 15%
+        @media only screen and (min-width: 501px) and (max-width: 1100px)   
+          margin-top: 15%
+        @media only screen and (min-width: 501px) and (max-width: 1281px)
+          margin-top: 15%
 
         a
-          font-size: $option-text-size
+          font-size: 2.5rem
           font-weight: normal
           color: $primary-color
           text-decoration: none
+          @media only screen and (min-width: 1px) and (max-width: 290px)
+            font-size: 1.8rem
+          @media only screen and (min-width: 291px) and (max-width: 500px)
+            font-size: 2.2rem
+          @media only screen and (min-width: 501px) and (max-width: 600px)
+            font-size: 1.8rem
 
         img
           width: 70%
           margin-top: 10%
           margin-bottom: 10%
+          cursor: pointer
+          @media only screen and (min-width: 1px) and (max-width: 290px)
+            width: 45%
+          @media only screen and (min-width: 291px) and (max-width: 500px)
+            width: 50%
+            margin-top: 5%
+            margin-bottom: 5%  
 
     .home-item-button-home
       width: 60%
