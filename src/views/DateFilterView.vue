@@ -128,7 +128,7 @@ export default {
     
 
   .date-filter-search    
-    width: 20%
+    width: 22%
     @include display-direction-justify-align($jus: center, $ali: center)
     margin-bottom: 2%
     @media only screen and (min-width: 1px) and (max-width: 500px)
