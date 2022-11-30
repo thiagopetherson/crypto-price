@@ -69,9 +69,6 @@ export default {
       this.searchedCoinValue = ""
       this.showresult = false
     }
-  },
-  mounted () {
-    console.log(this.coinId)
   }
 }
 
