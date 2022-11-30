@@ -1,0 +1,27 @@
+@mixin display-direction-justify-align($dis:flex, $dir:row, $jus:flex-start, $ali:flex-start)
+  display: $dis
+  flex-direction: $dir
+  justify-content: $jus
+  align-items: $ali
+
+@mixin default-button($bg, $color, $fs, $fw)
+  background-color: $bg
+  color: $color
+  font-size: $fs
+  font-weight: $fw
+  cursor: pointer
+
+@mixin button-hover($bg, $tran: 0s, $sca: 1.0)
+  transition: $tran
+  transform: scale($sca)
+  background-color: $bg
+
+@mixin animate-text($dur, $color, $otherColor)
+  animation: animate 1.8s linear infinite
+  @keyframes animate
+    0%
+      color: $color
+    50%
+      color: $otherColor
+    100%
+      color: $color
