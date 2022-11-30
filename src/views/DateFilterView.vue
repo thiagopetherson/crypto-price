@@ -10,7 +10,10 @@
     <div class="date-filter-search">
         <input class="date-filter-search-date" type="date" v-model="form.date" />
         <input class="date-filter-search-time" type="time" v-model="form.time" />
-        <button class="date-filter-search-submit" @click="getCoinByDate()">Search</button>   
+        <button class="date-filter-search-submit" @click="getCoinByDate()">Search</button>         
+    </div>
+    <div class="date-filter-alert">
+      <MessageLayout :msg="alertMsg" v-if="alertMsg" @clearMessage="alertMsg = null" /> 
     </div>
     <div class="date-filter-link">
       <button class="date-filter-link-button" @click="this.$router.push({ name: 'home' })">Home</button> 
@@ -22,26 +25,28 @@
 
 <script>
 import DataFilterCardLayout from '@/components/DataFilterCardLayout.vue'
+import MessageLayout from '@/components/MessageLayout.vue'
 
 export default {
   name: 'DateFilterView',
-  components: { DataFilterCardLayout },
+  components: { DataFilterCardLayout, MessageLayout },
   props: ['coinId'],
   data () {
     return {
       form: {
         date: "",
-        time: "",
+        time: "",        
       },
       searchedCoinValue: "",
-      showresult: false   
+      showresult: false,
+      alertMsg: null,
     }    
   },
   methods: {
     async getCoinByDate () {
 
       if (this.form.date === "") {
-        alert('Select a date')
+        this.alertMsg = 'Select a date'        
         return
       }
 
@@ -50,8 +55,7 @@ export default {
       
       await this.axios.get(`${this.baseUrl}/coins/${this.coinId}/market_chart/range?vs_currency=brl&from=${sdt}&to=${cdt}`)
       .then(response => {        
-        this.searchedCoinValue = response.data.prices[0][1]
-        console.log(this.searchedCoinValue)
+        this.searchedCoinValue = response.data.prices[0][1]        
         this.showresult = true
       })
       .catch(error => {
@@ -163,6 +167,12 @@ export default {
 
       &:hover
         @include button-hover($bg: $secondary-color, $tran: 0s, $sca: 1)
+
+  .date-filter-alert
+    width: 20%
+    text-align: center
+    @media only screen and (min-width: 1px) and (max-width: 500px)
+      width: 50%
 
   .date-filter-link
     width: 40%

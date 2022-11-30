@@ -3,8 +3,9 @@
     <div v-if="!loading" class="home-item">
       <div class="home-item-title" v-if="coinValues.length > 0">
         <h1>Realtime Currency Values</h1>
-        <input type="text" v-model="otherCoin" />
-        <button @click="() => getOtherCoinValue()">Search Other Coin</button>
+        <input v-if="coinValues.length > 1" type="text" v-model="otherCoin" />
+        <button v-if="coinValues.length > 1" @click="() => getOtherCoinValue()">Search Other Coin</button>
+        <MessageLayout :msg="alertMsg" v-if="alertMsg" @clearMessage="alertMsg = null" />
         <h5>click on a coin to search by date</h5>   
       </div>     
       <div class="home-item-title" v-else>
@@ -28,10 +29,12 @@
 </template>
 
 <script>
+import MessageLayout from '@/components/MessageLayout'
 import globalMixins from '@/mixins/globalMixins'
 
 export default {
   name: 'HomeView',
+  components: { MessageLayout },
   mixins: [globalMixins],
   data () {
     return {
@@ -39,7 +42,8 @@ export default {
       ethereum: null,
       atom: null,
       loading: false,
-      otherCoin: ''
+      otherCoin: '',
+      alertMsg: null,
     }
   },
   methods: {    
@@ -69,8 +73,8 @@ export default {
       .then(response => {   
         
         if ( this.otherCoin === '' || response.data.length === 0 ) {
-          this.loading = false          
-          alert('Use a valid coin')
+          this.loading = false 
+          this.alertMsg = 'Use a valid coin'         
           this.getCoinValues()
           return 
         }       
@@ -88,11 +92,11 @@ export default {
     },
     refreshCoinValue () {
       setInterval(() => {
-        if ( this.coinValues.length === 1 )
+        if ( this.coinValues.length === 1 && this.otherCoin != '' )
           this.getOtherCoinValue()
         else
           this.getCoinValues()          
-      }, 600000000)
+      }, 60000)
     }
   },
   created () {   
@@ -198,7 +202,7 @@ export default {
         @include display-direction-justify-align($dir: column, $ali: center)
         @media only screen and (min-width: 1px) and (max-width: 500px)
           width: 50%
-          margin-top: 15%
+          margin-top: 13%
         @media only screen and (min-width: 501px) and (max-width: 1000px)   
           margin-top: 15%
         @media only screen and (min-width: 1001px) and (max-width: 1281px)
