@@ -32,12 +32,12 @@ export default {
     @media only screen and (min-width: 1px) and (max-width: 500px)
       font-size: 1.6rem
     @media only screen and (min-width: 501px) and (max-width: 1024px)
-      font-size: 1.8rem
+      font-size: 1.8rem    
 
     span:first-child    
       border: 3px solid $light-color
       border-radius: 50%
-      padding: 5px 11px 0px 11px      
+      padding: 5px 11px 0px 11px   
 
     span:last-child
       margin-left: 5px        

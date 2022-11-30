@@ -4,7 +4,7 @@
       <div class="date-filter-card-item-content">       
         <div class="date-filter-card-item-content-coin">
           <h5>{{ coin }}</h5>
-          <h4>{{ brazilianCurrency(coinValue) }}</h4>
+          <h4 class="date-filter-card-item-content-coin-value">{{ brazilianCurrency(coinValue) }}</h4>
         </div>
         <div class="date-filter-card-item-content-date">
           <h5>Date</h5>
@@ -94,11 +94,16 @@ export default {
           font-weight: normal         
 
         h4          
+          color: $light-color
           font-weight: 500
           font-size: 2.5rem
-        
+
         h5         
           text-transform: capitalize
           font-weight: normal
-          font-size: 2.2rem 
+          font-size: 2.2rem
+
+        .date-filter-card-item-content-coin-value
+          @include animate-text($dur: 1s, $color: $light-color, $otherColor: $warning-color)
+                    
 </style>

@@ -101,6 +101,8 @@ export default {
         font-size: 2.3rem
       @media only screen and (min-width: 291px) and (max-width: 500px)
         font-size: 3rem
+      @media only screen and (min-width: 501px) and (max-width: 1000px)
+        font-size: 5rem
 
     h3      
       font-size: 2.2rem
@@ -117,46 +119,62 @@ export default {
       width: 20%
     @media only screen and (min-width: 291px) and (max-width: 500px)
       width: 30%
+    @media only screen and (min-width: 501px) and (max-width: 1000px)
+      width: 20%
 
     img
       width: 100%
     
 
   .date-filter-search    
-    width: 40%
-    @include display-direction-justify-align($dir: column, $ali: center)
+    width: 20%
+    @include display-direction-justify-align($jus: center, $ali: center)
+    margin-bottom: 2%
     @media only screen and (min-width: 1px) and (max-width: 500px)
+      width: 95%
       margin-top: 5%
-      margin-bottom: 5% 
+      margin-bottom: 7%
+    @media only screen and (min-width: 501px) and (max-width: 1000px)
+      width: 60%
+      margin-top: 2%
+      margin-bottom: 3%
+    @media only screen and (min-width: 1001px) and (max-width: 1281px)
+      width: 40%
     
     input
       padding: 1% 5% 1% 5%
       margin-top: 2%
       font-size: 1.8rem
       border: none
+      @media only screen and (min-width: 1px) and (max-width: 281px)
+        padding: 1% 1% 1% 1%
+        font-size: 1.4rem
+      @media only screen and (min-width: 282px) and (max-width: 500px)
+        padding: 1% 1% 1% 1%
 
     button
       padding: 1% 5% 1% 5%
       margin-top: 3%
-      font-size: 1.8rem
-      background-color: $primary-color
-      color: $light-color
+      @include default-button($bg: $primary-color, $color: $light-color, $fs: 1.8rem, $fw: 600)      
       border-radius: 5px
-      font-weight: 500
-      cursor: pointer
+      @media only screen and (min-width: 1px) and (max-width: 281px)
+        padding: 1% 2% 1% 2%
+        font-size: 1.4rem
+
+      &:hover
+        @include button-hover($bg: $secondary-color, $tran: 0s, $sca: 1)
 
   .date-filter-link
     width: 40%
     @include display-direction-justify-align($dir: column, $ali: center)     
 
     button
-      padding: 1% 5% 1% 5%
+      padding: 0.8% 3% 0.8% 3%
       margin-top: 2%
-      font-size: 1.8rem
-      background-color: $secondary-color
-      color: $light-color
+      @include default-button($bg: $primary-color, $color: $light-color, $fs: 1.8rem, $fw: 600)      
       border-radius: 5px
-      font-weight: 500
-      cursor: pointer
+
+      &:hover
+        @include button-hover($bg: $primary-color, $tran: 0.2s, $sca: 1.1)
 
 </style>

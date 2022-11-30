@@ -45,6 +45,7 @@ export default {
   methods: {    
     async getCoinValues () {
       this.loading = true
+      this.coinValues = []
 
       await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=bitcoin%2Cethereum%2Ccosmos%2Cdacxi&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
       .then(response => {       
@@ -63,18 +64,19 @@ export default {
     },
     async getOtherCoinValue () {
       this.loading = true
-
+      
       await this.axios.get(`${this.baseUrl}/coins/markets?vs_currency=brl&ids=${this.otherCoin.toLowerCase()}&order=market_cap_desc&per_page=100&page=1&sparkline=false`)
       .then(response => {   
         
         if ( this.otherCoin === '' || response.data.length === 0 ) {
           this.loading = false          
           alert('Use a valid coin')
+          this.getCoinValues()
           return 
         }       
         
         let coin = response.data[0]
-        this.coinValues = []
+        this.coinValues = []     
         this.coinValues.push(coin)     
       })
       .catch(error => {
@@ -83,11 +85,25 @@ export default {
       .finally(() => {        
         this.loading = false
       })
+    },
+    refreshCoinValue () {
+      setInterval(() => {
+        if ( this.coinValues.length === 1 )
+          this.getOtherCoinValue()
+        else
+          this.getCoinValues()          
+      }, 600000000)
     }
   },
   created () {   
-    this.getCoinValues()   
-  } 
+    this.getCoinValues()
+  },
+  mounted () {
+    this.refreshCoinValue()
+  },
+  beforeUnmount() {
+    clearInterval(this.refreshCoinValue())
+  },
 }
 </script>
 
@@ -131,23 +147,23 @@ export default {
           font-size: 3rem
         @media only screen and (min-width: 501px) and (max-width: 1100px)
           font-size: 3rem
-        
+                
       input
         padding: 0.2%
-        font-size: 1.4rem       
+        font-size: 1.4rem
+        border-top-left-radius: 3px
+        border-bottom-left-radius: 3px      
       
       button
         margin-left: -2px
-        padding: 0.2%      
-        font-size: 1.4rem
-        background-color: $secondary-color
-        color: $light-color       
-        font-weight: 500
-        cursor: pointer
+        padding: 0.2%
+        @include default-button($bg: $primary-color, $color: $light-color, $fs: 1.4rem, $fw: 500)        
+        border-top-right-radius: 3px
+        border-bottom-right-radius: 3px        
 
         &:hover
-          background-color: $primary-color 
-      
+          @include button-hover($bg: $secondary-color, $tran: 0.5s)          
+                
       input, button 
         @media only screen and (min-width: 1px) and (max-width: 290px) 
           padding: 0.2%
@@ -175,7 +191,7 @@ export default {
       @media only screen and (min-width: 501px) and (max-width: 1000px)
         width: 90%
       @media only screen and (min-width: 1025px)
-        margin-top: 5%
+        margin-top: 2%
 
       .home-item-content-prices
         width: 25%
@@ -191,7 +207,7 @@ export default {
         a
           font-size: 2.5rem
           font-weight: normal
-          color: $primary-color
+          color: $secondary-color
           text-decoration: none
           @media only screen and (min-width: 1px) and (max-width: 290px)
             font-size: 1.8rem
@@ -200,33 +216,41 @@ export default {
           @media only screen and (min-width: 501px) and (max-width: 600px)
             font-size: 1.8rem
 
+        a:first-child        
+          &:hover
+            color: $primary-color
+
+        a:last-child           
+          @include animate-text($dur: 2s, $color: $secondary-color, $otherColor: $primary-color)
+
         img
           width: 70%
-          margin-top: 10%
-          margin-bottom: 10%
+          margin-top: 7%
+          margin-bottom: 7%
           cursor: pointer
           @media only screen and (min-width: 1px) and (max-width: 290px)
             width: 45%
           @media only screen and (min-width: 291px) and (max-width: 500px)
             width: 50%
             margin-top: 5%
-            margin-bottom: 5%  
+            margin-bottom: 5%
+        
+          &:hover
+            transition: 1s
+            transform: scale(1.1)
 
     .home-item-button-home
+      margin-top: 2%
       width: 60%
       @include display-direction-justify-align($jus: center, $ali: center)    
 
       button
-        padding: 1% 5% 1% 5%       
-        font-size: 1.8rem
-        background-color: $secondary-color
-        color: $light-color
-        border-radius: 5px
-        font-weight: 500
-        cursor: pointer
+        padding: 1% 5% 1% 5%
+        @include default-button($bg: $secondary-color, $color: $light-color, $fs: 1.8rem, $fw: 500)
+        border-radius: 5px       
       
         &:hover
-          background-color: $primary-color          
+          @include button-hover($bg: $primary-color)              
 
   .loading    
     width: 100vw
