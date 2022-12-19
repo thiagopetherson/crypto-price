@@ -5,7 +5,7 @@
       <h3>Choose the period</h3>
     </div>
     <div class="date-filter-img">
-      <img src="@/assets/images/bitcoin.png" /> 
+      <img src="@/assets/images/moeda-min.jpg" /> 
     </div>
     <div class="date-filter-search">
         <input class="date-filter-search-date" type="date" v-model="form.date" />
@@ -125,6 +125,7 @@ export default {
 
     img
       width: 100%
+      border-radius: 50%
     
 
   .date-filter-search    
