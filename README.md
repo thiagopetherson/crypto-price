@@ -1,6 +1,5 @@
-# Frontend Dacxi
+# Cripto Price
 
-Test for frontend developer at Dacxi company<br/><br/>
 Application (SPA) that shows real time cryptocurrency values ​​using the CoinGecko API. 
 You can search by date and the name of a specific cryptocurrency.
 <br/>
@@ -24,12 +23,9 @@ Application Features:
 - Search by date<br/>
 - Search by name (id)<br/>
 
-## 🚀 Application Link and Code Review
+## 🚀 Application Link
 Here is a link to the hosted application.<br/>
 Link: https://crypto-price-system.netlify.app/<br/>
-
-Here is a link to a brief video description and code review of the project.<br/> 
-Link: https://www.loom.com/share/34f44f92025c4e999a0369f21f629d9d<br/><br/>
 
 ## Project setup
 ```
