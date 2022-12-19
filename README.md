@@ -1,4 +1,4 @@
-# Cripto Price
+# Crypto Price
 
 Application (SPA) that shows real time cryptocurrency values ​​using the CoinGecko API. 
 You can search by date and the name of a specific cryptocurrency.
